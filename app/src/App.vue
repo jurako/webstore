@@ -6,7 +6,7 @@
 </template>
 
 <script>
-import { axiosBackend } from './config/axios';
+import { axiosApi } from './config/axios';
 import HeaderView from './views/HeaderView.vue'
 
 export default {

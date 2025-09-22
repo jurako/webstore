@@ -3,7 +3,7 @@
 </template>
 
 <script>
-import { axiosFakeStore } from '@/config/axios'
+import { axiosApi } from '@/config/axios'
 import ProductCard from '../components/ProductCard.vue'
 
 export default {
@@ -21,26 +21,20 @@ export default {
       () => this.$route.params.category_name,
       (new_category_name) => this.fetchProducts(new_category_name)
     )
-    this.fetchProducts()
+    this.fetchProducts(this.$route.params.category_name)
   },
   methods: {
     fetchProducts(category_name = '') {
-      let url = {
-        path: '/products',
-        slug: '',
-        query: '?limit=10'
+      let url = 'products?limit=10';
+
+      if(category_name) {
+        url = `/categories/${category_name}/${url}`;
       }
 
-      if (this.$route.params.category_name) {
-        url.slug += '/category/' + this.$route.params.category_name
-      }
-
-      axiosFakeStore.get(url.path + url.slug + url.query).then((response) => {
-        response.data.forEach((element) => {
-          element.discount = Math.random() * (100 - 1) + 1
-        })
-        this.products = response.data
-      })
+      axiosApi.get(url)
+        .then((response) => {
+          this.products = response.data
+        });
     }
   }
 }

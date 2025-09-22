@@ -59,7 +59,7 @@ import ErrorMessage from '@/components/form_items/ErrorMessage.vue'
 import BaseButton from '@/components/BaseButton.vue'
 import { useUserStore } from '@/stores/user'
 import { useRouter } from 'vue-router'
-import { axiosBackend } from '@/config/axios'
+import { axiosApi } from '@/config/axios'
 import { ref } from 'vue'
 import { isEmpty, isInvalidEmail, Validator, isObjectEmpty } from '@/misc/helpers'
 
@@ -85,7 +85,7 @@ function submit() {
   errors.value = validator.errors
 
   if (isObjectEmpty(errors.value)) {
-    axiosBackend
+    axiosApi
       .post('/register', {
         name: name.value,
         lastName: lastName.value,
