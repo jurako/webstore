@@ -79,6 +79,7 @@ function showProductAddedMsg() {
   }, 3000)
 }
 // http://localhost/images/products/1.png
+// TODO: read URL to .env file
 const imageSrc = computed(() => `http://localhost/images/products/${props.product.image}`)
 const price = computed(() => props.product.price)
 
