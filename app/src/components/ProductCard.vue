@@ -18,8 +18,8 @@
       </div>
       <div class="relative">
         <div class="flex items-center justify-between">
-          <AmountField v-model="quantity" class="ml-auto mr-7" />
-          <BaseButton @click="handleAddToCart(product, quantity)">
+          <AmountField v-model="product.quantity" class="ml-auto mr-7" />
+          <BaseButton @click="handleAddToCart(product, product.quantity)">
             Add
             <BaseIcon
               class="ml-1 inline-block text-white transition-none"
@@ -48,7 +48,6 @@ import { useCartStore } from '@/stores/cart'
 import AmountField from '@/components/AmountField.vue'
 import BaseButton from '@/components/BaseButton.vue'
 
-const quantity = ref(parseInt(Math.random() * (15 - 1) + 1))
 const props = defineProps(['product'])
 const currency = inject(['AppCurrency'])
 const storeCart = useCartStore()
@@ -79,13 +78,14 @@ function showProductAddedMsg() {
     isAddedToCart.value = false
   }, 3000)
 }
+// http://localhost/images/products/1.png
+const imageSrc = computed(() => `http://localhost/images/products/${props.product.image}`)
+const price = computed(() => props.product.price)
 
-const imageSrc = computed(() => props.product.image)
-const price = computed(() => props.product.price.toFixed(2))
 const priceWithDiscount = computed(() =>
   (props.product.price - (props.product.price * props.product.discount) / 100).toFixed(2)
 )
-const discountLabel = computed(() => props.product.discount.toFixed(2) + '% off')
+const discountLabel = computed(() => props.product.discount + '% off')
 </script>
 
 <style scoped>
