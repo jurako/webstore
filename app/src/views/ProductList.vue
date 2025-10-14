@@ -3,7 +3,7 @@
 </template>
 
 <script>
-import { axiosApi } from '@/config/axios'
+import axios from '@/config/axios'
 import ProductCard from '../components/ProductCard.vue'
 
 export default {
@@ -31,7 +31,7 @@ export default {
         url = `/categories/${category_name}/${url}`;
       }
 
-      axiosApi.get(url)
+      axios.get(url)
         .then((response) => {
           this.products = response.data
         });

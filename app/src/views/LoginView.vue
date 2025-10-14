@@ -35,7 +35,7 @@
 import InputField from '@/components/form_items/InputField.vue'
 import ErrorMessage from '@/components/form_items/ErrorMessage.vue'
 import BaseButton from '@/components/BaseButton.vue'
-import { axiosApi } from '@/config/axios'
+import axios from '@/config/axios'
 import { ref } from 'vue'
 import { useUserStore } from '@/stores/user'
 import { useRouter } from 'vue-router'
@@ -58,7 +58,7 @@ function submit() {
   errors.value = validator.errors
 
   if (isObjectEmpty(errors.value)) {
-    axiosApi
+    axios
       .post('/login', {
         email: email.value,
         password: password.value

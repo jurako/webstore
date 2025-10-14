@@ -52,7 +52,7 @@
 <script setup>
 import { ref } from 'vue'
 
-import { axiosApi } from '@/config/axios'
+import axios from '@/config/axios'
 import SideMenu from '@/components/SideMenu.vue'
 import LogoSvg from '@/components/LogoSvg.vue'
 import { useCartStore } from '@/stores/cart'
@@ -70,7 +70,7 @@ storeCart.$onAction((action) => {
 
 let categories = ref([])
 function fetchCategories() {
-  axiosApi.get('categories').then((response) => {
+  axios.get('categories').then((response) => {
     categories.value = response.data
   })
 }

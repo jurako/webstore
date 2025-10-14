@@ -1,4 +1,4 @@
-import { axiosApi } from '@/config/axios'
+import axios from '@/config/axios'
 import { defineStore } from 'pinia'
 
 const persistedData = {
@@ -16,7 +16,7 @@ export const useUserStore = defineStore('user', {
   },
   actions: {
     logout() {
-      axiosApi.post('/logout').then((data) => {
+      axios.post('/logout').then((data) => {
         this.user = {}
         this.isAuthenticated = false
 
