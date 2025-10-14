@@ -3,15 +3,15 @@
     <Transition name="fade">
       <div
         class="fixed bottom-0 left-0 right-0 top-0 bg-backdrop opacity-50"
-        v-show="isVisible"
-        @click="$emit('toggle')"
+        v-show="isOpen"
+        @click="$emit('close')"
       ></div>
     </Transition>
     <Transition name="slide">
       <div
         class="side-menu absolute left-0 top-0 h-screen w-64 bg-celadon-light p-4"
-        v-show="isVisible"
-        @click="emitToggleCheckTarget"
+        v-show="isOpen"
+        @click="closeMenu($event)"
       >
         <RouterLink class="inline-block" :to="{ name: 'home' }">
           <LogoSvg />
@@ -32,18 +32,16 @@
   </aside>
 </template>
 
-<script>
+<script setup>
 import LogoSvg from './LogoSvg.vue'
 
-export default {
-  components: { LogoSvg },
-  props: ['isVisible', 'categories'],
-  methods: {
-    emitToggleCheckTarget(event) {
-      if (!event.target.classList.contains('side-menu')) {
-        this.$emit('toggle')
-      }
-    }
+defineProps({ isOpen: Boolean, categories: Array });
+
+const emit = defineEmits(['close']);
+
+function closeMenu(event) {
+  if (!event.target.classList.contains('side-menu')) {
+    emit('close');
   }
 }
 </script>

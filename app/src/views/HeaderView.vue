@@ -3,7 +3,7 @@
     class="fixed left-0 right-0 top-0 z-10 flex min-h-16 min-w-72 items-center bg-celadon-light sm:static"
   >
     <div class="container mx-auto flex h-full items-center justify-between gap-x-28 px-8">
-      <BaseIcon class="sm:hidden" iconName="fa-bars" @click="toggleSideMenu" />
+      <BaseIcon class="sm:hidden" iconName="fa-bars" @click="isSideMenuOpen = true" />
       <RouterLink class="hidden sm:block" :to="{ name: 'home' }">
         <LogoSvg />
       </RouterLink>
@@ -45,7 +45,7 @@
         </span>
       </nav>
     </div>
-    <SideMenu :categories="categories" :isVisible="showSideMenu" @toggle="toggleSideMenu" />
+    <SideMenu :categories="categories" :isOpen="isSideMenuOpen" @close="isSideMenuOpen = false"/>
   </header>
 </template>
 
@@ -61,6 +61,7 @@ import { useUserStore } from '@/stores/user'
 const storeCart = useCartStore()
 const storeUser = useUserStore()
 
+//TODO: probably move this inside stores/cart.js
 let playAnimation = ref(false)
 storeCart.$onAction((action) => {
   if (action.name == 'addProduct' || action.name == 'removeProduct') {
@@ -76,10 +77,7 @@ function fetchCategories() {
 }
 fetchCategories()
 
-let showSideMenu = ref(false)
-function toggleSideMenu() {
-  showSideMenu.value = !showSideMenu.value
-}
+const isSideMenuOpen = ref(false)
 </script>
 
 <style scoped>
