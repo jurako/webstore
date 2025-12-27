@@ -29,3 +29,16 @@ Route::get('products', function(Request $request) {
 
 Route::post('register', [AuthController::class, 'register']);
 Route::post('login', [AuthController::class, 'login']);
+
+
+Route::middleware(['auth'])->group(function() {
+
+    Route::get('/email/verify', [AuthController::class, 'verifyEmailNotice'])
+        ->name('verification.notice');
+    //Placeholder for resend verification
+});
+
+Route::middleware(['auth', 'verified'])->group(function() {
+    Route::get('/email/verify/{id}/{hash}', [AuthController::class, 'verifyEmailHandler'])
+        ->name('verification.verify');
+});

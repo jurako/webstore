@@ -62,4 +62,12 @@ class AuthController extends Controller
             ]);
         }
     }
+
+    public function verifyEmailNotice() {
+        return response()->json(['message' => 'Please verify your email address']);
+    }
+
+    public function verifyEmailHandler() {
+        return response()->json(['message' => 'Email has been verified']);
+    }
 }
