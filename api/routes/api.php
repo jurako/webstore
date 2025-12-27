@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request;
+use App\Http\Controllers\AuthController;
 use App\Models\Category;
 use App\Models\Product;
 
@@ -25,3 +26,6 @@ Route::get('products', function(Request $request) {
         })
         ->get();
 });
+
+Route::post('register', [AuthController::class, 'register']);
+Route::post('login', [AuthController::class, 'login']);

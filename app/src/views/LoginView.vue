@@ -69,7 +69,12 @@ function submit() {
         router.push({ name: 'orders' })
       })
       .catch((err) => {
-        errors.value = err.response.data
+        const backendErrors = err?.response?.data?.errors;
+        if(!backendErrors) return false;
+
+        for (const key in backendErrors) {
+          errors.value[key] = backendErrors[key][0];
+        }
       })
   }
 }
