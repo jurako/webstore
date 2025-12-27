@@ -53,15 +53,16 @@ const router = createRouter({
 router.beforeEach((to, from) => {
   const storeUser = useUserStore()
 
-  if (
-    (!storeUser.isAuthenticated && to.meta.authRequired) ||
-    (storeUser.isAuthenticated && to.name == 'login')
-  ) {
-    return { name: 'home' }
+  if(to.meta.auth && !storeUser.isAuthenticated) {
+    return { name: 'login' }
   }
 
   if(to.meta.verification && storeUser.isAuthenticated && !storeUser.isVerified) {
     return { name: 'verification-notice' }
+  }
+
+  if(storeUser.isAuthenticated && to.name == 'login') {
+    return { name: 'home' }
   }
 })
 
