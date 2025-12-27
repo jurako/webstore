@@ -42,4 +42,7 @@ Route::middleware(['auth'])->group(function() {
 Route::middleware(['auth', 'verified'])->group(function() {
     Route::get('/email/verify/{id}/{hash}', [AuthController::class, 'verifyEmailHandler'])
         ->name('verification.verify');
+    Route::get('/orders', function() {
+        return 'From backend orders';
+    });
 });
