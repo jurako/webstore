@@ -36,6 +36,7 @@ Route::middleware(['auth'])->group(function() {
     Route::get('/email/verify', [AuthController::class, 'verifyEmailNotice'])
         ->name('verification.notice');
     //Placeholder for resend verification
+    Route::post('logout', [AuthController::class, 'logout']);
 });
 
 Route::middleware(['auth', 'verified'])->group(function() {
