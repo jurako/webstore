@@ -34,8 +34,11 @@ class AuthController extends Controller
         //email verification
         event(new Registered($user));
 
+        $token = Auth::attempt($request->only(['email', 'password']));
+
         return response()->json([
-            'emailVerifyMessage' => 'Registration successful. Please verify your email'
+            'user'  => Auth::user(),
+            'token' => $token
         ]);
     }
 

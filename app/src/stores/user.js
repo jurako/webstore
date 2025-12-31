@@ -41,7 +41,7 @@ export const useUserStore = defineStore('user', {
 
       //local storage
       localStorage.setItem('isAuth', true)
-      localStorage.setItem('isVerified', true)
+      localStorage.setItem('isVerified', data.user?.email_verified_at)
       localStorage.setItem('user', JSON.stringify(data.user))
       localStorage.setItem('token', data.token)
     }
