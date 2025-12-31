@@ -28,20 +28,28 @@ Route::get('products', function(Request $request) {
 });
 
 Route::post('register', [AuthController::class, 'register']);
-Route::post('login', [AuthController::class, 'login']);
+
+Route::middleware(['guest'])->group(function() {
+    Route::post('login', [AuthController::class, 'login']);
+});
 
 
 Route::middleware(['auth'])->group(function() {
 
     Route::get('/email/verify', [AuthController::class, 'verifyEmailNotice'])
         ->name('verification.notice');
+
     //Placeholder for resend verification
+
     Route::post('logout', [AuthController::class, 'logout']);
 });
 
-Route::middleware(['auth', 'verified'])->group(function() {
+Route::middleware(['auth', 'signed'])->group(function() {
     Route::get('/email/verify/{id}/{hash}', [AuthController::class, 'verifyEmailHandler'])
         ->name('verification.verify');
+});
+
+Route::middleware(['auth', 'verified'])->group(function() {
     Route::get('/orders', function() {
         return 'From backend orders';
     });
