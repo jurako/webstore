@@ -22,6 +22,8 @@ export const useUserStore = defineStore('user', {
     fullName: (state) => state.user.name + ' ' + state.user.lastname
   },
   actions: {
+
+    //TODO: check somehow whether JWT is expired and sync with frontend state
     logout() {
       axios.post('/logout').then((data) => {
         this.user = {}

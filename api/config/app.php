@@ -123,4 +123,15 @@ return [
         'store' => env('APP_MAINTENANCE_STORE', 'database'),
     ],
 
+    /*
+    |--------------------------------------------------------------------------
+    | Frontend app configs
+    |--------------------------------------------------------------------------
+    |
+    */
+
+    'frontend_url' => env('FRONTEND_URL', 'http://localhost'),
+
+    'frontend_port' => env('FRONTEND_PORT', '5173'),
+
 ];

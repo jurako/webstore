@@ -7,6 +7,7 @@ use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\ValidationException;
+use Illuminate\Foundation\Auth\EmailVerificationRequest;
 
 class AuthController extends Controller
 {
@@ -76,7 +77,9 @@ class AuthController extends Controller
         return response()->json(['message' => 'Please verify your email address']);
     }
 
-    public function verifyEmailHandler() {
-        return response()->json(['message' => 'Email has been verified']);
+    public function verifyEmailHandler(EmailVerificationRequest $request) {
+        $request->fulfill();
+
+        return response()->json(['success' => 1]);
     }
 }

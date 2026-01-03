@@ -38,11 +38,12 @@ import BaseButton from '@/components/BaseButton.vue'
 import axios from '@/config/axios'
 import { ref } from 'vue'
 import { useUserStore } from '@/stores/user'
-import { useRouter } from 'vue-router'
+import { useRouter, useRoute } from 'vue-router'
 import { isEmpty, isInvalidEmail, Validator, isObjectEmpty } from '@/misc/helpers'
 
 const storeUser = useUserStore()
 const router = useRouter()
+const route = useRoute()
 
 const email = ref('')
 const password = ref('')
@@ -66,7 +67,13 @@ function submit() {
       .then((response) => {
         storeUser.persistDataAfterLogin(response.data)
 
-        router.push({ name: 'orders' })
+        const redirectedFrom = route?.redirectedFrom;
+
+        if(redirectedFrom && redirectedFrom?.name == 'verification-handler') {
+          router.push({ name: 'verification-handler', params: { ...redirectedFrom.params }, query: { ...redirectedFrom.query } });
+        } else {
+          router.push({ name: 'orders' })
+        }
       })
       .catch((err) => {
         const backendErrors = err?.response?.data?.errors;

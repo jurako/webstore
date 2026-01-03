@@ -6,6 +6,8 @@ import LoginView from '../views/LoginView.vue'
 import RegisterView from '../views/RegisterView.vue'
 import OrdersView from '../views/OrdersView.vue'
 import VerificationNotice from '@/views/VerificationNotice.vue'
+import { emailVerificationGuard } from './guards'
+import { h } from 'vue' // TODO: Refactor into function component (create function_components.js for small components, that don't require .vue components)
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -44,8 +46,13 @@ const router = createRouter({
     {
       path: '/verification_notice',
       name: 'verification-notice',
-      component: VerificationNotice,
+      component: VerificationNotice, // TODO: Refactor into function component (create function_components.js for small components, that don't require .vue components)
       meta: { auth: true }
+    },
+    {
+      path: '/email/verify/:id/:hash',
+      name: 'verification-handler',
+      beforeEnter: emailVerificationGuard
     }
   ]
 })
