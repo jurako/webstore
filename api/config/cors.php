@@ -6,7 +6,7 @@ return [
 
     'allowed_methods' => ['*'], // Allow all methods (GET, POST, etc.)
 
-    'allowed_origins' => ['http://localhost:5173'], // Change to your SPA URL
+    'allowed_origins' => ['http://localhost:5173', 'http://localhost:5178'], // Change to your SPA URL
 
     'allowed_origins_patterns' => [],
 
