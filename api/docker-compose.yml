@@ -14,6 +14,21 @@ services:
             - sail
         working_dir: /app
 
+    admin:
+        build:
+            context: ../admin
+            dockerfile: Dockerfile
+        ports:
+            - "5178:5178"
+        volumes:
+            - ../admin:/admin
+            - /admin/node_modules
+        depends_on:
+            - laravel.test
+        networks:
+            - sail
+        working_dir: /admin
+
     laravel.test:
         build:
             context: './vendor/laravel/sail/runtimes/8.4'
