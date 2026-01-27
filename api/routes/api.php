@@ -31,6 +31,7 @@ Route::post('register', [AuthController::class, 'register']);
 
 Route::middleware(['guest'])->group(function() {
     Route::post('login', [AuthController::class, 'login']);
+    Route::post('admin/login', [AuthController::class, 'adminLogin']);
 });
 
 
@@ -52,5 +53,20 @@ Route::middleware(['auth', 'signed'])->group(function() {
 Route::middleware(['auth', 'verified'])->group(function() {
     Route::get('/orders', function() {
         return 'From backend orders';
+    });
+});
+
+
+
+/**
+ *
+ * Admin endpoints
+ *
+ */
+Route::middleware('auth:admin')->group(function() {
+    Route::post('admin/logout', [AuthController::class, 'adminLogout']);
+
+    Route::get('test-admin', function() {
+        return 'From test admin';
     });
 });

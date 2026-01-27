@@ -82,4 +82,32 @@ class AuthController extends Controller
 
         return response()->json(['success' => 1]);
     }
+
+    public function adminLogin(Request $request) {
+        $request->validate([
+            'username' => 'required',
+            'password' => 'required'
+        ], [
+            'required' => 'Please fill in :attribute field'
+        ]);
+
+        $token = Auth::guard('admin')->attempt($request->all());
+
+        if(!$token) {
+            throw ValidationException::withMessages([
+                'username' => ['The provided credentials are incorrect']
+            ]);
+        } else {
+            return response()->json([
+                'user' => Auth::guard('admin')->user(),
+                'token' => $token
+            ]);
+        }
+    }
+
+    public function adminLogout() {
+        Auth::guard('admin')->logout();
+
+        return response()->json(['success' => 1]);
+    }
 }
