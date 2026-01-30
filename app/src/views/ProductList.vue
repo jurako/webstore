@@ -2,40 +2,33 @@
   <ProductCard v-for="product in products" :key="product.id" :product="product" />
 </template>
 
-<script>
+<script setup>
 import axios from '@/config/axios'
 import ProductCard from '../components/ProductCard.vue'
+import { ref, watch } from 'vue'
+import { useRoute } from 'vue-router'
 
-export default {
-  components: {
-    ProductCard
-  },
-  data() {
-    return {
-      products: [],
-      category: {}
-    }
-  },
-  created() {
-    this.$watch(
-      () => this.$route.params.category_name,
-      (new_category_name) => this.fetchProducts(new_category_name)
-    )
-    this.fetchProducts(this.$route.params.category_name)
-  },
-  methods: {
-    fetchProducts(category_name = '') {
-      let url = 'products?limit=10';
+const route = useRoute();
+const products = ref([]);
 
-      if(category_name) {
-        url = `/categories/${category_name}/${url}`;
-      }
+watch(
+  () => route.params.category_name,
+  (new_category_name) => fetchProducts(new_category_name)
+);
 
-      axios.get(url)
-        .then((response) => {
-          this.products = response.data
-        });
-    }
+fetchProducts(route.params.category_name);
+
+function fetchProducts(category_name = '') {
+  let url = 'products?limit=10';
+
+  if(category_name) {
+    url = `/categories/${category_name}/${url}`;
   }
+
+  axios.get(url)
+    .then((response) => {
+      products.value = response.data
+    });
 }
+
 </script>
