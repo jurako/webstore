@@ -1,4 +1,6 @@
 import axios from 'axios'
+import toNetworkError from '@/misc/errors/NetworkError';
+import { handleNetworkError } from '@/misc/errors/handlers'
 
 const api = axios.create({
   baseURL: `${import.meta.env.VITE_BASE_API_URL}/api`,
@@ -12,5 +14,17 @@ api.interceptors.request.use(config => {
   }
   return config;
 });
+
+api.interceptors.response.use(
+  response => response,
+  error => {
+    error.requestedURL = error?.config?.url;
+    const networkError = toNetworkError(error);
+
+    handleNetworkError(networkError);
+
+    return Promise.reject(networkError);
+  }
+)
 
 export default api;
