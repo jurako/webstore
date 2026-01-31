@@ -1,7 +1,9 @@
 function handleNetworkError(error) {
 
     switch (error.type) {
-        case 'NETWORK_OFFLINE' || 'NETWORK_TIMEOUT' || 'NETWORK_ERROR':
+        case 'NETWORK_OFFLINE':
+        case 'NETWORK_TIMEOUT':
+        case 'NETWORK_ERROR':
           alert('Network error!');
 
         break;
