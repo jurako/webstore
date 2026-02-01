@@ -14,6 +14,13 @@ Route::get('categories', function() {
 Route::get('categories/{category_name}/products', function($category_name) {
     $category_id = Category::where('title', $category_name)->value('id');
 
+    if(!$category_id) {
+        return response()->json([
+            'error' => 'Resource Not Found',
+            'message' => sprintf('Category with name %s not found.', $category_name)
+        ], 404);
+    }
+
     return Product::where('category_id', $category_id)->get();
 });
 
@@ -69,4 +76,11 @@ Route::middleware('auth:admin')->group(function() {
     Route::get('test-admin', function() {
         return 'From test admin';
     });
+});
+
+Route::fallback(function(Request $request) {
+    return response()->json([
+        'error' => 'Page Not Found',
+        'message' => sprintf('The requested path %s does not exist.', $request->path())
+    ], 404);
 });
