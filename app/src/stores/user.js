@@ -2,6 +2,7 @@ import axios from '@/config/axios'
 import { defineStore } from 'pinia'
 
 let user = localStorage.getItem('user');
+//TODO: add try block around JSON.parse
 user = (user !== 'undefined' && user !== 'null') ? JSON.parse(user) : {};
 
 const persistedData = {
@@ -26,6 +27,8 @@ export const useUserStore = defineStore('user', {
     //TODO: check somehow whether JWT is expired and sync with frontend state
     logout() {
       axios.post('/logout').then((data) => {
+
+        //TODO: replace with this.$reset();
         this.user = {}
         this.token = null
         this.isAuthenticated = false
