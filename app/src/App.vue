@@ -5,15 +5,9 @@
   </main>
 </template>
 
-<script>
+<script setup>
+import { provide } from 'vue';
 import HeaderView from './views/HeaderView.vue'
 
-export default {
-  components: {
-    HeaderView
-  },
-  provide: {
-    AppCurrency: '€'
-  }
-}
+provide('AppCurrency', '€');
 </script>
