@@ -4,11 +4,15 @@ class NetworkError extends Error {
     this.type = type;
     this.stack = options?.stack;
     this.status = options?.status;
+    this.redirectToNotFound = options?.redirectToNotFound;
     this.originalError = options?.originalError;
   }
 }
 
 function toNetworkError(error) {
+
+  const options = { originalError: error };
+
   if(!error)
     return new NetworkError(
       'UNKNOWN',
@@ -16,11 +20,11 @@ function toNetworkError(error) {
     );
 
   if(!error.response) {
-    if(navigator.onLine) {
+    if(!navigator.onLine) {
       return new NetworkError(
         'NETWORK_OFFLINE',
         'You appear to be offline',
-        { originalError: error }
+        options
       );
     }
 
@@ -28,46 +32,56 @@ function toNetworkError(error) {
       return new NetworkError(
         'NETWORK_TIMEOUT',
         'Request timed out',
-        { originalError: error }
+        options
       );
     }
 
     return new NetworkError(
       'NETWORK_ERROR',
       'Network error occured',
-      { originalError: error }
+      options
     );
   }
 
-  const status = error.status;
+  const status   = error.status;
+  options.status = error.status;
 
   switch (status) {
     case 401:
       return new NetworkError(
         'UNAUTHORIZED',
         'Authentication required',
-        { status, originalError: error }
+        options
       )
 
     case 403:
       return new NetworkError(
         'FORBIDDEN',
         'You are not allowed to perform this action',
-        { status, originalError: error }
+        options
       )
 
     case 404:
+      options.redirectToNotFound = error.redirectToNotFound ?? false;
+
       return new NetworkError(
         'NOT_FOUND',
         'Requested resource not found' + (error?.requestedURL ? `: ${error.requestedURL}` : ''),
-        { status, originalError: error, }
-      )
+        options
+      );
 
     case 422:
       return new NetworkError(
         'VALIDATION_ERROR',
         'Validation failed',
-        { status, originalError: error }
+        options
+      )
+    
+    case 500:
+      return new NetworkError(
+        'SERVER_ERROR',
+        'Server error! Please try again later.',
+        options
       )
 
     default:
@@ -75,14 +89,14 @@ function toNetworkError(error) {
         return new NetworkError(
           'SERVER_ERROR',
           'Server error occurred',
-          { status, originalError: error }
+          options
         )
       }
 
       return new NetworkError(
         'UNKNOWN_ERROR',
         'Unexpected error occurred',
-        { status, originalError: error }
+        options
       )
   }
 }

@@ -18,9 +18,10 @@ api.interceptors.request.use(config => {
 api.interceptors.response.use(
   response => response,
   error => {
-    error.requestedURL = error?.config?.url;
-    const networkError = toNetworkError(error);
+    error.requestedURL = error?.config?.url ?? '';
+    error.redirectToNotFound = error?.config?.redirectToNotFound ?? false;
 
+    const networkError = toNetworkError(error);
     handleNetworkError(networkError);
 
     return Promise.reject(networkError);

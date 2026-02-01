@@ -1,19 +1,25 @@
+import router from '@/router';
+
 function handleNetworkError(error) {
 
     switch (error.type) {
         case 'NETWORK_OFFLINE':
         case 'NETWORK_TIMEOUT':
         case 'NETWORK_ERROR':
-          alert('Network error!');
+          console.log('❌ (networkError) Network error!');
 
         break;
 
         case 'NOT_FOUND':
-          alert('Not found!');
+          console.log('❌ (networkError) Not found!');
+
+          if(error.redirectToNotFound) {
+            router.push({ name: 'not-found' });
+          }
         break;
     
         default:
-            alert('Unknown error');
+            console.log('❌ (networkError) Unknown error');
         break;
     }
 }

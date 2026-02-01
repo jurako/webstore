@@ -6,6 +6,7 @@ import LoginView from '../views/LoginView.vue'
 import RegisterView from '../views/RegisterView.vue'
 import OrdersView from '../views/OrdersView.vue'
 import VerificationNotice from '@/views/VerificationNotice.vue'
+import NotFound from '@/views/NotFound.vue'
 import { emailVerificationGuard } from './guards'
 import { h } from 'vue' // TODO: Refactor into function component (create function_components.js for small components, that don't require .vue components)
 
@@ -53,6 +54,16 @@ const router = createRouter({
       path: '/email/verify/:id/:hash',
       name: 'verification-handler',
       beforeEnter: emailVerificationGuard
+    },
+    {
+      path: '/not-found',
+      name: 'not-found',
+      component: NotFound
+    },
+    {
+      path: '/:pathMatch(.*)*',
+      name: 'catch-all',
+      redirect: 'not-found'
     }
   ]
 })

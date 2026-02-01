@@ -25,7 +25,7 @@ function fetchProducts(category_name = '') {
     url = `/categories/${category_name}/${url}`;
   }
 
-  axios.get(url)
+  axios.get(url, { redirectToNotFound: true })
     .then((response) => {
       products.value = response.data
     });
