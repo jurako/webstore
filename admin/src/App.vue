@@ -1,4 +1,7 @@
 <template>
+
+  <RouterView />
+
     Hello from admin!
 
     <button @click="login">Login</button>
