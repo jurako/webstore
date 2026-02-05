@@ -22,7 +22,7 @@ services:
             - "5178:5178"
         volumes:
             - ../admin:/admin
-            - /admin/node_modules
+            - admin_node_modules:/admin/node_modules
         depends_on:
             - laravel.test
         networks:
@@ -93,4 +93,6 @@ networks:
         driver: bridge
 volumes:
     sail-mysql:
+        driver: local
+    admin_node_modules:
         driver: local
