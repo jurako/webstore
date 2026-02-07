@@ -16,13 +16,13 @@ services:
 
     admin:
         build:
-            context: ../admin
+            context: ../app/admin
             dockerfile: Dockerfile
         ports:
             - "5178:5178"
         volumes:
-            - ../admin:/admin
-            - admin_node_modules:/admin/node_modules
+            - ../app/admin:/admin
+            - admin_node_modules:/app/admin/node_modules
         depends_on:
             - laravel.test
         networks:
