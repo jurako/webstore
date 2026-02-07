@@ -1,13 +1,13 @@
 services:
     frontend:
         build:
-            context: ../app
+            context: ../app/frontend
             dockerfile: Dockerfile
         ports:
             - "5173:5173"
         volumes:
-            - ../app:/app
-            - /app/node_modules
+            - ../app/frontend:/app
+            - frontend_node_modules:/app/frontend/node_modules
         depends_on:
             - laravel.test
         networks:
@@ -95,4 +95,6 @@ volumes:
     sail-mysql:
         driver: local
     admin_node_modules:
+        driver: local
+    frontend_node_modules:
         driver: local

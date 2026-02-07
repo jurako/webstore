@@ -44,6 +44,9 @@ Route::middleware(['guest'])->group(function() {
 
 Route::middleware(['auth'])->group(function() {
 
+    //TO DO: fix this route, it is available event after user has veryfied his email
+    // 1. Add a check in vue-router's - if user is already verified, redirect it home (or somewhere else? think about this);
+    // 2. Check this endpoint in Postman, for pure API level request - think about, what response should be sent back (maybe laravel docs has already a solution for this case)
     Route::get('/email/verify', [AuthController::class, 'verifyEmailNotice'])
         ->name('verification.notice');
 
