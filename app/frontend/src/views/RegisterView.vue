@@ -53,15 +53,18 @@
 </template>
 
 <script setup>
+import { ref } from 'vue'
+import axios from '@/config/axios'
+import { useRouter } from 'vue-router'
+import { useUserStore } from '@/stores/user'
 import InputField from '@/components/form_items/InputField.vue'
 import RadioButton from '@/components/form_items/RadioButton.vue'
 import ErrorMessage from '@/components/form_items/ErrorMessage.vue'
 import BaseButton from '@/components/BaseButton.vue'
-import { useUserStore } from '@/stores/user'
-import { useRouter } from 'vue-router'
-import axios from '@/config/axios'
-import { ref } from 'vue'
-import { isEmpty, isInvalidEmail, Validator, isObjectEmpty } from '@/misc/helpers'
+
+//TO DO: move rules into Validator class and set rules as strings (make map of rule names to rule objects)
+import { isObjectEmpty } from '~/misc/helpers'
+import { isEmpty, isInvalidEmail, Validator } from '~/misc/validator';
 
 const storeUser = useUserStore()
 const router = useRouter()

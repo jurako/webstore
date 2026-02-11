@@ -63,6 +63,11 @@ class isInvalidEmailRule extends ValidationRule {
     return !isInvalidEmailRule.#emailRegExp.test(value)
   }
 }
-export const isEmpty = new isEmptyRule()
-export const isInvalidEmail = new isInvalidEmailRule()
-export { Validator }
+const isEmpty = new isEmptyRule()
+const isInvalidEmail = new isInvalidEmailRule()
+
+export { 
+  Validator,
+  isEmpty,
+  isInvalidEmail
+}

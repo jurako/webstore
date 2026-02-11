@@ -7,6 +7,7 @@ services:
             - "5173:5173"
         volumes:
             - ../app/frontend:/app
+            - ../app/shared:/shared
             - frontend_node_modules:/app/frontend/node_modules
         depends_on:
             - laravel.test
@@ -22,6 +23,7 @@ services:
             - "5178:5178"
         volumes:
             - ../app/admin:/admin
+            - ../app/shared:/shared
             - admin_node_modules:/app/admin/node_modules
         depends_on:
             - laravel.test
