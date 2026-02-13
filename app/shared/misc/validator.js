@@ -1,8 +1,6 @@
 import { isObjectEmpty } from './helpers'
 
 class Validator {
-  static errorClasses = ['border-red-600', 'border-2']
-
   constructor(items) {
     this.#validateArgument(items)
 

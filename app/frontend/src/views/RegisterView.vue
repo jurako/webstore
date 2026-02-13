@@ -5,13 +5,13 @@
       <div class="flex flex-col gap-y-6 sm:flex-row sm:items-center sm:gap-x-6">
         <InputField
           v-model="name"
-          :class="[errors.name ? Validator.errorClasses : '']"
+          v-error="errors.name"
           class="w-full sm:w-1/2"
           placeholder="First Name"
         />
         <InputField
           v-model="lastname"
-          :class="[errors.lastname ? Validator.errorClasses : '']"
+          v-error="errors.lastname"
           class="w-full sm:w-1/2"
           placeholder="Last Name"
         />
@@ -27,14 +27,14 @@
       <div class="flex flex-col gap-y-6 sm:flex-row sm:items-center sm:gap-x-6">
         <InputField
           v-model="email"
-          :class="[errors.email ? Validator.errorClasses : '']"
+          v-error="errors.email"
           class="w-full sm:w-1/2"
           placeholder="Email"
         />
         <InputField
           v-model="password"
+          v-error="errors.password"
           type="password"
-          :class="[errors.password ? Validator.errorClasses : '']"
           class="w-full sm:w-1/2"
           placeholder="Password"
         />

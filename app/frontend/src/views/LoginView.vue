@@ -3,17 +3,17 @@
     <h1 class="text-center text-3xl font-bold text-neutral-600">Sign in</h1>
     <section class="mb-7 mt-11 flex flex-col items-center gap-y-5">
       <InputField
-        class="w-full sm:w-1/2"
-        :class="[errors.email ? Validator.errorClasses : '']"
         v-model="email"
+        v-error="errors.password"
+        class="w-full sm:w-1/2"
         placeholder="Email"
         ref="emailInput"
       />
       <InputField
-        class="w-full sm:w-1/2"
-        :class="[errors.password ? Validator.errorClasses : '']"
-        inputType="password"
         v-model="password"
+        v-error="errors.password"
+        class="w-full sm:w-1/2"
+        inputType="password"
         placeholder="Password"
         ref="passwordInput"
       />
