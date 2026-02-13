@@ -24,7 +24,7 @@ api.interceptors.response.use(
     const networkError = toNetworkError(error);
     handleNetworkError(networkError);
 
-    return Promise.reject(networkError);
+    return Promise.reject(error);
   }
 )
 
