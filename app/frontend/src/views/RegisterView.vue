@@ -54,7 +54,6 @@
 
 <script setup>
 import { ref } from 'vue'
-import axios from '@/config/axios'
 import { useRouter } from 'vue-router'
 import { useUserStore } from '@/stores/user'
 import InputField from '@/components/form_items/InputField.vue'
@@ -65,6 +64,7 @@ import BaseButton from '@/components/BaseButton.vue'
 //TO DO: move rules into Validator class and set rules as strings (make map of rule names to rule objects)
 import { isObjectEmpty } from '~/misc/helpers'
 import { isEmpty, isInvalidEmail, Validator } from '~/misc/validator';
+import { usePostWithValidation } from '~/composables/usePostWithValidation'
 
 const storeUser = useUserStore()
 const router = useRouter()
@@ -76,37 +76,31 @@ const gender = ref('F')
 const email = ref('')
 const password = ref('')
 const country = ref('')
-const errors = ref({})
 
 const validator = new Validator([
   { rule: isEmpty, fields: { name, lastname, email, password } },
   { rule: isInvalidEmail, fields: { email } }
-])
+]);
+
+const { errors, post } = usePostWithValidation();
 
 function submit() {
-  validator.validate()
-  errors.value = validator.errors
 
-  if (isObjectEmpty(errors.value)) {
-    axios
-      .post('/register', {
-        name: name.value,
-        lastname: lastname.value,
-        email: email.value,
-        password: password.value
-      })
-      .then((response) => {
-        storeUser.persistDataAfterLogin(response.data);
-        router.push({ name: 'verification-notice' });
-      })
-      .catch((err) => {
-        const backendErrors = err?.response?.data?.errors;
-        if(!backendErrors) return false;
-
-        for (const key in backendErrors) {
-          errors.value[key] = backendErrors[key][0];
-        }
-      })
+  const thenCb = (response) => {
+    storeUser.persistDataAfterLogin(response.data);
+    router.push({ name: 'verification-notice' });
   }
+
+  post(
+    '/register',
+    {
+      name: name.value,
+      lastname: lastname.value,
+      email: email.value,
+      password: password.value
+    },
+    validator,
+    thenCb
+  );
 }
 </script>
