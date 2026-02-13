@@ -11,22 +11,23 @@ export function usePostWithValidation() {
       errors.value = validator.errors;
 
       if(isObjectEmpty(errors.value)) {
-        const result = await axios.post(url, fields);
 
-        result
-          .then(thenCb)
-          .catch((err) => {
-            const backendErrors = err?.response?.data?.errors;
-            if(!backendErrors) return false;
+        try {
+          const result = await axios.post(url, fields);
+          return result;
+        } catch (err) {
+          const backendErrors = err?.response?.data?.errors;
 
-            for (const key in backendErrors) {
-              errors.value[key] = backendErrors[key][0];
-            }
+          if(!backendErrors) return false;
 
-            if(typeof catchCb == 'function') {
-                catchCb();
-            }
-          });
+          for (const key in backendErrors) {
+            errors.value[key] = backendErrors[key][0];
+          }
+
+          if(typeof catchCb == 'function') {
+              catchCb();
+          }
+        }
       }
     }
 
