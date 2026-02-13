@@ -33,7 +33,6 @@
 
 <script setup>
 import { ref } from 'vue'
-import axios from '@/config/axios'
 import { useRouter, useRoute } from 'vue-router'
 import { useUserStore } from '@/stores/user'
 import InputField from '@/components/form_items/InputField.vue'
@@ -42,6 +41,7 @@ import BaseButton from '@/components/BaseButton.vue'
 
 import { isObjectEmpty } from '~/misc/helpers'
 import { isEmpty, isInvalidEmail, Validator } from '~/misc/validator'
+import { usePostWithValidation } from '~/composables/usePostWithValidation'
 
 const storeUser = useUserStore()
 const router = useRouter()
@@ -49,42 +49,36 @@ const route = useRoute()
 
 const email = ref('')
 const password = ref('')
-const errors = ref({})
 
 const validator = new Validator([
   { rule: isEmpty, fields: { email, password } },
   { rule: isInvalidEmail, fields: { email } }
 ])
 
+const { errors, post } = usePostWithValidation();
+
 function submit() {
-  validator.validate()
-  errors.value = validator.errors
 
-  if (isObjectEmpty(errors.value)) {
-    axios
-      .post('/login', {
-        email: email.value,
-        password: password.value
-      })
-      .then((response) => {
-        storeUser.persistDataAfterLogin(response.data)
+  post(
+    '/login',
+    {
+      email: email.value,
+      password: password.value
+    },
+    validator
+  ).then((response) => {
 
-        const redirectedFrom = route?.redirectedFrom;
+    if(!response) return;
 
-        if(redirectedFrom && redirectedFrom?.name == 'verification-handler') {
-          router.push({ name: 'verification-handler', params: { ...redirectedFrom.params }, query: { ...redirectedFrom.query } });
-        } else {
-          router.push({ name: 'orders' })
-        }
-      })
-      .catch((err) => {
-        const backendErrors = err?.response?.data?.errors;
-        if(!backendErrors) return false;
+    storeUser.persistDataAfterLogin(response.data)
 
-        for (const key in backendErrors) {
-          errors.value[key] = backendErrors[key][0];
-        }
-      })
-  }
+    const redirectedFrom = route?.redirectedFrom;
+
+    if(redirectedFrom?.name == 'verification-handler') {
+      router.push({ name: 'verification-handler', params: { ...redirectedFrom.params }, query: { ...redirectedFrom.query } });
+    } else {
+      router.push({ name: 'orders' })
+    }
+  });
 }
 </script>
