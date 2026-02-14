@@ -86,11 +86,6 @@ const { errors, post } = usePostWithValidation();
 
 function submit() {
 
-  const thenCb = (response) => {
-    storeUser.persistDataAfterLogin(response.data);
-    router.push({ name: 'verification-notice' });
-  }
-
   post(
     '/register',
     {
@@ -99,8 +94,13 @@ function submit() {
       email: email.value,
       password: password.value
     },
-    validator,
-    thenCb
-  );
+    validator
+  ).then((response) => {
+    if(!response) return;
+
+    storeUser.persistDataAfterLogin(response.data);
+    router.push({ name: 'verification-notice' });
+  });
+
 }
 </script>
