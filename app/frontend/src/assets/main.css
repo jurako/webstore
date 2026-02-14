@@ -13,3 +13,9 @@
     margin: 0;
   }
 }
+
+@layer utilities {
+  .input-error {
+    @apply border-red-600 border-2;
+  }
+}

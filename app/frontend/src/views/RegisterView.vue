@@ -5,14 +5,14 @@
       <div class="flex flex-col gap-y-6 sm:flex-row sm:items-center sm:gap-x-6">
         <InputField
           v-model="name"
-          v-error="errors.name"
           class="w-full sm:w-1/2"
+          :class="{'input-error': errors.name}"
           placeholder="First Name"
         />
         <InputField
           v-model="lastname"
-          v-error="errors.lastname"
           class="w-full sm:w-1/2"
+          :class="{'input-error': errors.lastname}"
           placeholder="Last Name"
         />
       </div>
@@ -27,15 +27,15 @@
       <div class="flex flex-col gap-y-6 sm:flex-row sm:items-center sm:gap-x-6">
         <InputField
           v-model="email"
-          v-error="errors.email"
           class="w-full sm:w-1/2"
+          :class="{'input-error': errors.email}"
           placeholder="Email"
         />
         <InputField
           v-model="password"
-          v-error="errors.password"
           type="password"
           class="w-full sm:w-1/2"
+          :class="{'input-error': errors.password}"
           placeholder="Password"
         />
       </div>

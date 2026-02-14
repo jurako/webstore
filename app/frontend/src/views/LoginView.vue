@@ -4,15 +4,15 @@
     <section class="mb-7 mt-11 flex flex-col items-center gap-y-5">
       <InputField
         v-model="email"
-        v-error="errors.email"
         class="w-full sm:w-1/2"
+        :class="{'input-error': errors.email}"
         placeholder="Email"
         ref="emailInput"
       />
       <InputField
         v-model="password"
-        v-error="errors.password"
         class="w-full sm:w-1/2"
+        :class="{'input-error': errors.password}"
         inputType="password"
         placeholder="Password"
         ref="passwordInput"
