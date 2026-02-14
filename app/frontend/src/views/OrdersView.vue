@@ -1,7 +1,7 @@
 <template>Hello from orders view!</template>
 
 <script setup>
-    import axios from '@/config/axios'
+    import axios from '~/config/axios'
     import { onMounted, onUnmounted } from "vue";
 
     onMounted(() => console.log('Orders mounted'))

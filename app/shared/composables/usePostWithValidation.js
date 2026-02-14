@@ -1,5 +1,5 @@
 import { ref } from 'vue'
-import axios from '@/config/axios' //TO DO: make only a single instance of axios and move it to shared
+import axios from '~/config/axios'
 import { isObjectEmpty } from '~/misc/helpers'
 
 export function usePostWithValidation() {

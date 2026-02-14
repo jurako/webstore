@@ -3,7 +3,7 @@
 </template>
 
 <script setup>
-import axios from '@/config/axios'
+import axios from '~/config/axios'
 import ProductCard from '../components/ProductCard.vue'
 import { ref, watch } from 'vue'
 import { useRoute } from 'vue-router'

@@ -52,7 +52,7 @@
 <script setup>
 import { ref } from 'vue'
 
-import axios from '@/config/axios'
+import axios from '~/config/axios'
 import SideMenu from '@/components/SideMenu.vue'
 import LogoSvg from '@/components/LogoSvg.vue'
 import { useCartStore } from '@/stores/cart'

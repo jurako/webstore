@@ -1,4 +1,4 @@
-import axios from '@/config/axios'
+import axios from "~/config/axios"
 import { defineStore } from 'pinia'
 
 let user = localStorage.getItem('user');

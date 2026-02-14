@@ -1,5 +1,5 @@
 import { useUserStore } from "@/stores/user";
-import axios from "@/config/axios";
+import axios from "~/config/axios";
 
 /**
  * Gets fired when user goes to verification link in email
