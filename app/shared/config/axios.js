@@ -1,6 +1,6 @@
 import axios from 'axios'
-import toNetworkError from '@/misc/errors/NetworkError';
-import { handleNetworkError } from '@/misc/errors/handlers'
+import toNetworkError from '~/errors/NetworkError';
+import { handleNetworkError } from '~/errors/handlers'
 
 const api = axios.create({
   baseURL: `${import.meta.env.VITE_BASE_API_URL}/api`,
