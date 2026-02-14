@@ -45,12 +45,4 @@ app.use(router)
 
 app.component('FontAwesomeIcon', FontAwesomeIcon).component('BaseIcon', BaseIcon)
 
-app.directive('error', {
-  updated: (el, binding) => {
-    if(binding.value) {
-      el.classList.add('border-red-600', 'border-2');
-    }
-  }
-});
-
 app.mount('#app')
